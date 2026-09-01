@@ -82,9 +82,6 @@ export default function HeroSection({ onOpenPitchDeck, onOpenSchedule }) {
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-cyan-300">
               GridSense Seed Round Deck • Autonomous Campus Microgrids
             </span>
-            <span className="text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-bold border border-emerald-500/30">
-              Slide 01 & 08
-            </span>
           </div>
         </div>
 

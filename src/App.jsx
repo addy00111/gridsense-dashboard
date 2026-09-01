@@ -24,22 +24,22 @@ export default function App() {
 
       {/* Main Content Sections */}
       <main>
-        {/* 1. Hero & Value Proposition (Slide 01 & 08) */}
+        {/* 1. Hero & Value Proposition */}
         <HeroSection 
           onOpenPitchDeck={() => setPitchDeckOpen(true)}
           onOpenSchedule={() => setScheduleOpen(true)}
         />
 
-        {/* 2. Interactive Real-Time Energy Flow Simulator (Slides 02 & 04) */}
+        {/* 2. Interactive Real-Time Energy Flow Simulator */}
         <EnergyFlowSimulator />
 
-        {/* 3. Live Metrics & 24-Hour AI Predictive Dashboard (Slides 03 & 05) */}
+        {/* 3. Live Metrics & 24-Hour AI Predictive Dashboard */}
         <PredictiveDashboard />
 
-        {/* 4. Problem & System Architecture Visualizer (Slides 01 & 06) */}
+        {/* 4. Problem & System Architecture Visualizer */}
         <ProblemArchitecture />
 
-        {/* 5. Interactive Investor ROI & Impact Calculator (Slide 07) */}
+        {/* 5. Interactive Investor ROI & Impact Calculator */}
         <RoiCalculator 
           onOpenSchedule={() => setScheduleOpen(true)}
         />

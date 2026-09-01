@@ -86,7 +86,7 @@ export default function PredictiveDashboard() {
           <div>
             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-bold uppercase tracking-wider mb-3">
               <Activity className="w-3.5 h-3.5" />
-              <span>Slide 03 & 05 • Predictive Analytics & Demand Shaving</span>
+              <span>Predictive Analytics & Demand Shaving</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
               Live Metrics & <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400">24-Hour AI Predictive Model</span>

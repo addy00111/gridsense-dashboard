@@ -138,7 +138,7 @@ export default function ProblemArchitecture() {
           <div className="text-center max-w-3xl mx-auto mb-14">
             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-bold uppercase tracking-wider mb-3">
               <ShieldAlert className="w-3.5 h-3.5" />
-              <span>Slide 01 • The Green Campus Dilemma</span>
+              <span>The Green Campus Dilemma</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
               The 4 Critical Bottlenecks in <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-300">Modern Campus Microgrids</span>
@@ -185,7 +185,7 @@ export default function ProblemArchitecture() {
           <div className="text-center max-w-3xl mx-auto mb-14">
             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-3">
               <Cpu className="w-3.5 h-3.5" />
-              <span>Slide 06 • End-to-End Technology Stack</span>
+              <span>End-to-End Technology Stack</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
               GridSense <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">Autonomous Architecture</span>

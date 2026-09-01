@@ -132,7 +132,7 @@ export default function EnergyFlowSimulator() {
           <div>
             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-3">
               <Zap className="w-3.5 h-3.5" />
-              <span>Slide 02 & 04 • Real-Time Physics & Microgrid Simulation</span>
+              <span>Real-Time Physics & Microgrid Simulation</span>
             </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
               Interactive Microgrid <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Energy Flow Simulator</span>

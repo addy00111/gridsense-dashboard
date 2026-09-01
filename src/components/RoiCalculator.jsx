@@ -69,7 +69,7 @@ export default function RoiCalculator({ onOpenSchedule }) {
         <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider mb-3">
             <Calculator className="w-3.5 h-3.5" />
-            <span>Slide 07 • Financial Modeling & Investor Unit Economics</span>
+            <span>Financial Modeling & Investor Unit Economics</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
             Interactive Investor <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-emerald-300 to-teal-400">ROI & Impact Calculator</span>
