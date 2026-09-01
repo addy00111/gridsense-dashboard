@@ -1,9 +1,9 @@
 import React from 'react';
-import { 
-  Zap, 
-  ShieldCheck, 
-  Sparkles, 
-  Presentation, 
+import {
+  Zap,
+  ShieldCheck,
+  Sparkles,
+  Presentation,
   Calendar,
   Globe,
   Share2,
@@ -14,14 +14,14 @@ import {
 export default function Footer({ onOpenPitchDeck, onOpenSchedule }) {
   return (
     <footer className="bg-[#03060c] border-t border-slate-800/80 pt-16 pb-12 relative overflow-hidden">
-      
+
       {/* Background glow */}
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-3/4 h-32 bg-emerald-500/5 blur-[100px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10 pb-12 border-b border-slate-800/80">
-          
+
           {/* Brand Col (5 cols) */}
           <div className="md:col-span-5">
             <div className="flex items-center space-x-3 mb-4">
@@ -34,7 +34,7 @@ export default function Footer({ onOpenPitchDeck, onOpenSchedule }) {
                 Grid<span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-cyan-400">Sense</span>
               </span>
             </div>
-            
+
             <p className="text-sm text-slate-400 leading-relaxed max-w-sm mb-6">
               AI-Powered Smart Energy Management for Green Campuses. Autonomous microgrid dispatch minimizing expensive peak grid reliance while maximizing rooftop solar utilization.
             </p>
@@ -115,7 +115,7 @@ export default function Footer({ onOpenPitchDeck, onOpenSchedule }) {
           </div>
 
           <div className="flex items-center space-x-4">
-            <span>Built with React + Tailwind + Recharts</span>
+            <span>Zero-Carbon Campus Infrastructure</span>
             <button
               onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
               className="p-2 rounded-lg bg-slate-900 border border-slate-800 text-slate-400 hover:text-white transition-colors"
