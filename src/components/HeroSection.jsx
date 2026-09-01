@@ -123,7 +123,7 @@ export default function HeroSection({ onOpenPitchDeck, onOpenSchedule }) {
             className="px-6 py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-850 border border-slate-700/80 hover:border-teal-500/50 text-slate-200 font-semibold text-sm sm:text-base backdrop-blur-xl transition-all duration-200 shadow-sm flex items-center space-x-2"
           >
             <Layers className="w-5 h-5 text-teal-400" />
-            <span>Explore Investor Slides</span>
+            <span>Explore Pitch Deck</span>
           </button>
 
           <button

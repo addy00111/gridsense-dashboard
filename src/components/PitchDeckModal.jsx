@@ -159,7 +159,7 @@ export default function PitchDeckModal({ isOpen, onClose, onOpenSchedule }) {
             </div>
             <div>
               <span className="text-sm font-bold text-white">GridSense Seed Pitch Deck</span>
-              <span className="text-xs text-slate-400 ml-2">Slide {currentSlide + 1} of {slides.length}</span>
+              <span className="text-xs text-slate-400 ml-2">{currentSlide + 1} of {slides.length}</span>
             </div>
           </div>
 
@@ -189,7 +189,7 @@ export default function PitchDeckModal({ isOpen, onClose, onOpenSchedule }) {
               {slide.tag}
             </span>
             <span className="text-3xl font-black text-slate-700 font-mono">
-              SLIDE {slide.number}
+              #{slide.number}
             </span>
           </div>
 

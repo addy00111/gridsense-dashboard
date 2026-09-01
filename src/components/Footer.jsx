@@ -88,7 +88,7 @@ export default function Footer({ onOpenPitchDeck, onOpenSchedule }) {
               >
                 <span className="flex items-center space-x-2">
                   <Presentation className="w-4 h-4 text-teal-400" />
-                  <span>View All 8 Pitch Slides</span>
+                  <span>View Full Pitch Deck</span>
                 </span>
                 <span className="text-slate-500 group-hover:text-teal-400 transition-colors">→</span>
               </button>

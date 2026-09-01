@@ -23,7 +23,7 @@ export default function EnergyFlowSimulator() {
   const [batterySoc, setBatterySoc] = useState(84);
   const [isSimulating, setIsSimulating] = useState(true);
 
-  // Scenarios defined from Slide 02 & 04
+  // Microgrid simulation scenarios
   const scenarios = {
     A: {
       id: 'A',

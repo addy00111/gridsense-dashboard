@@ -68,7 +68,7 @@ export default function Navbar({ onOpenPitchDeck, onOpenSchedule }) {
               className="flex items-center space-x-2 px-4 py-2 rounded-xl text-xs font-semibold text-slate-200 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/80 hover:border-teal-500/50 transition-all duration-200 shadow-sm hover:shadow-[0_0_15px_rgba(20,184,166,0.2)]"
             >
               <Presentation className="w-4 h-4 text-teal-400" />
-              <span>Pitch Deck Slides</span>
+              <span>Investor Pitch Deck</span>
             </button>
 
             <button
@@ -139,7 +139,7 @@ export default function Navbar({ onOpenPitchDeck, onOpenSchedule }) {
               className="w-full flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-slate-800 border border-slate-700 text-slate-200"
             >
               <Presentation className="w-4 h-4 text-teal-400" />
-              <span>Pitch Deck Slides</span>
+              <span>Investor Pitch Deck</span>
             </button>
             <button
               onClick={() => { onOpenSchedule(); setMobileMenuOpen(false); }}
