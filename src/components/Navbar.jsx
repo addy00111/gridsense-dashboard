@@ -53,7 +53,7 @@ export default function Navbar({ onOpenPitchDeck, onOpenSchedule, isBackendOnlin
                 <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${isBackendOnline ? 'bg-emerald-400' : 'bg-amber-400'}`}></span>
               </span>
               <span className={`text-xs font-semibold tracking-wide flex items-center gap-1.5 ${isBackendOnline ? 'text-emerald-300' : 'text-amber-300'}`}>
-                {isBackendOnline ? 'FASTAPI CLOUD BACKEND: ONLINE' : 'STANDALONE SIMULATOR MODE'} <span className="opacity-40">•</span> ALL SYSTEMS OPTIMAL
+                LIVE TELEMETRY STREAM <span className="opacity-40">•</span> SYSTEM OPTIMAL
               </span>
             </div>
 

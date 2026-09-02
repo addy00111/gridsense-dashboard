@@ -82,7 +82,7 @@ export default function PredictiveDashboard() {
         <div className="p-4 rounded-xl bg-slate-900/95 border border-slate-700 shadow-2xl backdrop-blur-xl text-xs space-y-2 min-w-[200px]">
           <div className="font-bold text-slate-200 border-b border-slate-800 pb-1.5 flex items-center justify-between">
             <span>{viewMode === 'live' ? 'Live Tick:' : 'Forecast Hour:'} {label}</span>
-            <span className="text-emerald-400 font-mono">{viewMode === 'live' ? 'FastAPI SSE' : 'AI Active'}</span>
+            <span className="text-emerald-400 font-mono">{viewMode === 'live' ? 'Live Telemetry' : 'AI Active'}</span>
           </div>
           {payload.map((item, idx) => (
             <div key={idx} className="flex items-center justify-between">
@@ -119,7 +119,7 @@ export default function PredictiveDashboard() {
               Live Metrics & <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400">24-Hour AI Predictive Model</span>
             </h2>
             <p className="text-slate-400 text-sm sm:text-base mt-2 max-w-2xl">
-              Streaming live 1-second telemetry from FastAPI with real-time neural load forecasting and synthetic anomaly detection.
+              Streaming live 1-second telemetry from GridSense Edge Telemetry Engine with real-time neural load forecasting and synthetic anomaly detection.
             </p>
           </div>
 
@@ -258,7 +258,7 @@ export default function PredictiveDashboard() {
                     : 'Solar Supply vs Campus Demand & Peak-Shaving Intervention'}
                 </h3>
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">
-                  {viewMode === 'live' ? 'FASTAPI SSE STREAM' : 'AI PREDICTIVE DISPATCH'}
+                  {viewMode === 'live' ? 'LIVE TELEMETRY STREAM' : 'AI PREDICTIVE DISPATCH'}
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-1">
@@ -417,7 +417,7 @@ export default function PredictiveDashboard() {
                     </span>
                   </h3>
                   <p className="text-xs text-slate-400 mt-0.5">
-                    FastAPI Anomaly Engine continuously validates grid compliance thresholds (Voltage, Frequency, Overloads).
+                    GridSense Telemetry Engine continuously validates grid compliance thresholds (Voltage, Frequency, Overloads).
                   </p>
                 </div>
               </div>

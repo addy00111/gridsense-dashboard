@@ -31,15 +31,15 @@ export default function EnergyFlowSimulator() {
   const scenarios = {
     LIVE: {
       id: 'LIVE',
-      title: 'Live Fast-API Telemetry Stream',
-      badge: isConnected ? 'FastAPI Connected (1s Tick)' : 'Connecting to Backend...',
-      desc: 'Real-time telemetry streamed directly from GridSense Python FastAPI backend (Node-A Solar, Node-B BESS, Node-C Campus).',
+      title: 'Live Microgrid Telemetry Stream',
+      badge: isConnected ? 'Live Feed (1s Refresh)' : 'Connecting to Telemetry Engine...',
+      desc: 'Real-time telemetry streamed directly from GridSense Edge Telemetry Engine (Node-A Solar, Node-B BESS, Node-C Campus).',
       icon: Radio,
       color: 'from-emerald-400 via-teal-400 to-cyan-400',
       accentColor: 'text-emerald-400',
       borderColor: 'border-emerald-500/50',
       bgGlow: 'rgba(16, 185, 129, 0.2)',
-      liveHighlight: isConnected ? 'Streaming continuous 1-second Modbus telemetry from FastAPI Cloud.' : 'Attempting reconnection to https://gridsense-dashboard-7gqv.onrender.com...'
+      liveHighlight: isConnected ? 'Streaming continuous 1-second Modbus telemetry from GridSense Edge Telemetry Engine.' : 'Attempting reconnection to https://gridsense-dashboard-7gqv.onrender.com...'
     },
     A: {
       id: 'A',
@@ -161,7 +161,7 @@ export default function EnergyFlowSimulator() {
               Interactive Microgrid <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Energy Flow Simulator</span>
             </h2>
             <p className="text-slate-400 text-sm sm:text-base mt-2 max-w-2xl">
-              Connected live to GridSense Python FastAPI telemetry engine at <code className="text-emerald-300 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800 font-mono text-xs">https://gridsense-dashboard-7gqv.onrender.com</code>.
+              Connected live to GridSense Edge Telemetry Engine at <code className="text-emerald-300 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800 font-mono text-xs">https://gridsense-dashboard-7gqv.onrender.com</code>.
             </p>
           </div>
 
@@ -171,7 +171,7 @@ export default function EnergyFlowSimulator() {
               <Radio className={`w-5 h-5 ${isBackendOnline ? 'animate-pulse' : ''}`} />
             </div>
             <div>
-              <div className="text-xs text-slate-400 font-medium">FastAPI Ingestion Engine</div>
+              <div className="text-xs text-slate-400 font-medium">GridSense Edge Telemetry Engine</div>
               <div className="text-sm font-bold text-white flex items-center gap-1.5">
                 <span className={`h-2 w-2 rounded-full ${isBackendOnline ? 'bg-emerald-400 animate-ping' : 'bg-amber-400'}`}></span>
                 <span>{isBackendOnline ? 'Live WebSocket/SSE (1s)' : 'Standalone Simulator Mode'}</span>
