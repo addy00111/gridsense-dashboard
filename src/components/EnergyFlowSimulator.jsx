@@ -39,7 +39,7 @@ export default function EnergyFlowSimulator() {
       accentColor: 'text-emerald-400',
       borderColor: 'border-emerald-500/50',
       bgGlow: 'rgba(16, 185, 129, 0.2)',
-      liveHighlight: isConnected ? 'Streaming continuous 1-second Modbus telemetry from GridSense Edge Telemetry Engine.' : 'Attempting reconnection to https://gridsense-dashboard-7gqv.onrender.com...'
+      liveHighlight: isConnected ? 'Streaming continuous 1-second Modbus telemetry from GridSense Edge Telemetry Engine.' : 'Reconnecting to Edge Telemetry Engine...'
     },
     A: {
       id: 'A',
@@ -161,7 +161,7 @@ export default function EnergyFlowSimulator() {
               Interactive Microgrid <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Energy Flow Simulator</span>
             </h2>
             <p className="text-slate-400 text-sm sm:text-base mt-2 max-w-2xl">
-              Connected live to GridSense Edge Telemetry Engine at <code className="text-emerald-300 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800 font-mono text-xs">https://gridsense-dashboard-7gqv.onrender.com</code>.
+              Autonomous real-time power dispatch and telemetry across campus energy assets.
             </p>
           </div>
 
