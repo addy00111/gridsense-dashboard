@@ -8,7 +8,8 @@ import {
   Globe,
   Share2,
   Mail,
-  ArrowUp
+  ArrowUp,
+  Cpu
 } from 'lucide-react';
 
 export default function Footer({ onOpenPitchDeck, onOpenSchedule }) {
