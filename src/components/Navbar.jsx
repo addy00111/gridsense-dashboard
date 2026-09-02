@@ -26,12 +26,9 @@ export default function Navbar({ onOpenPitchDeck, onOpenSchedule, isBackendOnlin
               </div>
             </div>
             <div>
-              <div className="flex items-center space-x-1.5">
+              <div className="flex items-center">
                 <span className="text-2xl font-black tracking-tight text-white font-sans">
                   Grid<span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">Sense</span>
-                </span>
-                <span className="text-[10px] uppercase font-bold tracking-widest px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
-                  AI
                 </span>
               </div>
               <p className="text-[10px] text-slate-400 tracking-wider hidden sm:block font-medium">
