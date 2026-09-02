@@ -183,7 +183,7 @@ export default function EnergyFlowSimulator() {
         {/* Scenario Selection Tabs */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           
-          {/* LIVE FASTAPI TELEMETRY TAB */}
+          {/* LIVE TELEMETRY TAB */}
           <button
             onClick={() => setActiveScenario('LIVE')}
             className={`text-left p-4 rounded-2xl transition-all duration-300 border backdrop-blur-xl relative overflow-hidden group ${
@@ -205,11 +205,11 @@ export default function EnergyFlowSimulator() {
                 </span>
               </div>
               <span className={`text-[9px] font-extrabold px-1.5 py-0.5 rounded-full ${isBackendOnline ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30' : 'bg-amber-500/20 text-amber-300'}`}>
-                {isBackendOnline ? 'LIVE API' : 'STANDALONE'}
+                {isBackendOnline ? 'ACTIVE FEED' : 'STANDALONE'}
               </span>
             </div>
             <p className="text-[11px] text-slate-400 line-clamp-2 leading-relaxed">
-              Streaming real-time 3-node Modbus telemetry from Python backend.
+              Streaming real-time 3-node Modbus telemetry from campus edge controller.
             </p>
           </button>
 
