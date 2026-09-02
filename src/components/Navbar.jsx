@@ -53,7 +53,7 @@ export default function Navbar({ onOpenPitchDeck, onOpenSchedule, isBackendOnlin
                 <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${isBackendOnline ? 'bg-emerald-400' : 'bg-amber-400'}`}></span>
               </span>
               <span className={`text-xs font-semibold tracking-wide flex items-center gap-1.5 ${isBackendOnline ? 'text-emerald-300' : 'text-amber-300'}`}>
-                LIVE TELEMETRY STREAM <span className="opacity-40">•</span> SYSTEM OPTIMAL
+                LIVE GRID MONITOR <span className="opacity-40">•</span> SYSTEM OPTIMAL
               </span>
             </div>
 
@@ -105,7 +105,7 @@ export default function Navbar({ onOpenPitchDeck, onOpenSchedule, isBackendOnlin
         <div className="sm:hidden px-4 pt-2 pb-6 space-y-3 bg-[#070c18] border-b border-slate-800 animate-in fade-in slide-in-from-top-4">
           <div className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-emerald-950/80 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
             <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>LIVE DEMO • ALL SYSTEMS OPTIMAL</span>
+            <span>LIVE GRID MONITOR • SYSTEM OPTIMAL</span>
           </div>
           <nav className="flex flex-col space-y-2 text-sm text-slate-300 py-2">
             <a 
