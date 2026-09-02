@@ -10,7 +10,7 @@ import {
   ShieldCheck
 } from 'lucide-react';
 
-export default function Navbar({ onOpenPitchDeck, onOpenSchedule }) {
+export default function Navbar({ onOpenPitchDeck, onOpenSchedule, isBackendOnline = true }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
@@ -43,13 +43,17 @@ export default function Navbar({ onOpenPitchDeck, onOpenSchedule }) {
           {/* Center: Live Status Badge & Nav Links */}
           <div className="hidden lg:flex items-center space-x-8">
             {/* Live Operational Status */}
-            <div className="flex items-center space-x-2.5 px-3.5 py-1.5 rounded-full bg-emerald-950/60 border border-emerald-500/30 shadow-[0_0_15px_rgba(16,185,129,0.15)]">
+            <div className={`flex items-center space-x-2.5 px-3.5 py-1.5 rounded-full border transition-all duration-300 ${
+              isBackendOnline 
+                ? 'bg-emerald-950/60 border-emerald-500/40 shadow-[0_0_15px_rgba(16,185,129,0.2)]'
+                : 'bg-amber-950/60 border-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.2)]'
+            }`}>
               <span className="relative flex h-2.5 w-2.5">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+                <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${isBackendOnline ? 'bg-emerald-400' : 'bg-amber-400'}`}></span>
+                <span className={`relative inline-flex rounded-full h-2.5 w-2.5 ${isBackendOnline ? 'bg-emerald-400' : 'bg-amber-400'}`}></span>
               </span>
-              <span className="text-xs font-semibold tracking-wide text-emerald-300 flex items-center gap-1.5">
-                LIVE DEMO <span className="text-emerald-500/60">•</span> ALL SYSTEMS OPTIMAL
+              <span className={`text-xs font-semibold tracking-wide flex items-center gap-1.5 ${isBackendOnline ? 'text-emerald-300' : 'text-amber-300'}`}>
+                {isBackendOnline ? 'FASTAPI BACKEND: ONLINE (8000)' : 'STANDALONE SIMULATOR MODE'} <span className="opacity-40">•</span> ALL SYSTEMS OPTIMAL
               </span>
             </div>
 

@@ -8,10 +8,12 @@ import RoiCalculator from './components/RoiCalculator';
 import PitchDeckModal from './components/PitchDeckModal';
 import SchedulePitchModal from './components/SchedulePitchModal';
 import Footer from './components/Footer';
+import { useLiveTelemetry } from './hooks/useLiveTelemetry';
 
 export default function App() {
   const [pitchDeckOpen, setPitchDeckOpen] = useState(false);
   const [scheduleOpen, setScheduleOpen] = useState(false);
+  const { isBackendOnline } = useLiveTelemetry();
 
   return (
     <div className="min-h-screen bg-[#060913] text-slate-100 font-sans selection:bg-emerald-500 selection:text-slate-950">
@@ -20,6 +22,7 @@ export default function App() {
       <Navbar 
         onOpenPitchDeck={() => setPitchDeckOpen(true)}
         onOpenSchedule={() => setScheduleOpen(true)}
+        isBackendOnline={isBackendOnline}
       />
 
       {/* Main Content Sections */}

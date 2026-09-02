@@ -23,15 +23,31 @@ import {
   SlidersHorizontal,
   Clock,
   ArrowUpRight,
-  ShieldCheck
+  ShieldCheck,
+  Radio,
+  AlertTriangle,
+  Zap,
+  ShieldAlert,
+  Play
 } from 'lucide-react';
+import { useLiveTelemetry } from '../hooks/useLiveTelemetry';
 
 export default function PredictiveDashboard() {
-  const [timeHorizon, setTimeHorizon] = useState('24h');
-  const [showPeakWindow, setShowPeakWindow] = useState(true);
-  const [activeMetric, setActiveMetric] = useState('all');
+  const { 
+    telemetry, 
+    alerts, 
+    activeAlerts, 
+    isConnected, 
+    isBackendOnline, 
+    historyBuffer, 
+    triggerAnomaly 
+  } = useLiveTelemetry();
 
-  // 24-Hour Data for GridSense Prediction (Supply vs Demand with Peak-Shaving Window)
+  const [viewMode, setViewMode] = useState('live'); // 'live' or '24h'
+  const [showPeakWindow, setShowPeakWindow] = useState(true);
+  const [triggering, setTriggering] = useState(false);
+
+  // 24-Hour AI Predictive Baseline Data
   const hourlyData = [
     { time: '00:00', solar: 0, demand: 180, unoptimizedGrid: 180, optimizedGrid: 180, battery: 0, costAvoided: 0 },
     { time: '02:00', solar: 0, demand: 160, unoptimizedGrid: 160, optimizedGrid: 220, battery: 60, costAvoided: 0 },
@@ -48,14 +64,25 @@ export default function PredictiveDashboard() {
     { time: '24:00', solar: 0, demand: 180, unoptimizedGrid: 180, optimizedGrid: 180, battery: 0, costAvoided: 0 },
   ];
 
+  // Pick chart data: live rolling stream buffer or 24h forecast
+  const chartData = (viewMode === 'live' && historyBuffer.length > 2) 
+    ? historyBuffer 
+    : hourlyData;
+
+  const handleTriggerAnomaly = async (type) => {
+    setTriggering(true);
+    await triggerAnomaly(type, 6);
+    setTimeout(() => setTriggering(false), 2000);
+  };
+
   // Custom tooltip for ultra-clean dark UI
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
         <div className="p-4 rounded-xl bg-slate-900/95 border border-slate-700 shadow-2xl backdrop-blur-xl text-xs space-y-2 min-w-[200px]">
           <div className="font-bold text-slate-200 border-b border-slate-800 pb-1.5 flex items-center justify-between">
-            <span>Forecast Hour: {label}</span>
-            <span className="text-emerald-400 font-mono">AI Active</span>
+            <span>{viewMode === 'live' ? 'Live Tick:' : 'Forecast Hour:'} {label}</span>
+            <span className="text-emerald-400 font-mono">{viewMode === 'live' ? 'FastAPI SSE' : 'AI Active'}</span>
           </div>
           {payload.map((item, idx) => (
             <div key={idx} className="flex items-center justify-between">
@@ -64,7 +91,7 @@ export default function PredictiveDashboard() {
                 <span>{item.name}:</span>
               </span>
               <span className="font-bold font-mono text-white">
-                {item.value} {item.unit || 'kW'}
+                {item.value} kW
               </span>
             </div>
           ))}
@@ -92,25 +119,33 @@ export default function PredictiveDashboard() {
               Live Metrics & <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-teal-300 to-emerald-400">24-Hour AI Predictive Model</span>
             </h2>
             <p className="text-slate-400 text-sm sm:text-base mt-2 max-w-2xl">
-              Real-time campus KPIs synchronized with an ensemble neural network predicting solar irradiance and campus load patterns.
+              Streaming live 1-second telemetry from FastAPI with real-time neural load forecasting and synthetic anomaly detection.
             </p>
           </div>
 
-          {/* Timeframe selector */}
+          {/* View mode toggle: Live Stream vs 24H Horizon */}
           <div className="flex items-center space-x-2 p-1.5 rounded-xl bg-slate-900 border border-slate-800 self-start md:self-auto">
-            {['24h', '7D', '30D'].map(t => (
-              <button
-                key={t}
-                onClick={() => setTimeHorizon(t)}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  timeHorizon === t 
-                    ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/30' 
-                    : 'text-slate-400 hover:text-slate-200'
-                }`}
-              >
-                {t === '24h' ? '24-Hour AI Horizon' : t === '7D' ? '7-Day Trend' : 'Monthly Agg'}
-              </button>
-            ))}
+            <button
+              onClick={() => setViewMode('live')}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center space-x-1.5 ${
+                viewMode === 'live'
+                  ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/30'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              <Radio className="w-3.5 h-3.5 animate-pulse" />
+              <span>Live 1s SSE Stream</span>
+            </button>
+            <button
+              onClick={() => setViewMode('24h')}
+              className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                viewMode === '24h'
+                  ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/30'
+                  : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              <span>24-Hour AI Horizon</span>
+            </button>
           </div>
         </div>
 
@@ -128,7 +163,11 @@ export default function PredictiveDashboard() {
             
             <div className="flex items-center justify-between">
               <div>
-                <div className="text-4xl font-extrabold text-white font-sans">68%</div>
+                <div className="text-4xl font-extrabold text-white font-sans">
+                  {telemetry 
+                    ? `${Math.min(100, Math.round((telemetry.total_solar_generation_kw / Math.max(1, telemetry.total_campus_demand_kw)) * 100))}%` 
+                    : '68%'}
+                </div>
                 <div className="text-xs text-emerald-400 font-semibold mt-1 flex items-center gap-1">
                   <ArrowUpRight className="w-3.5 h-3.5" />
                   <span>+14% vs conventional grid</span>
@@ -155,7 +194,9 @@ export default function PredictiveDashboard() {
                     d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                   />
                 </svg>
-                <span className="absolute text-[11px] font-bold text-emerald-300">68%</span>
+                <span className="absolute text-[11px] font-bold text-emerald-300">
+                  {telemetry ? `${Math.min(100, Math.round((telemetry.total_solar_generation_kw / Math.max(1, telemetry.total_campus_demand_kw)) * 100))}%` : '68%'}
+                </span>
               </div>
             </div>
           </div>
@@ -205,56 +246,59 @@ export default function PredictiveDashboard() {
         </div>
 
         {/* 24-Hour AI Predictive Line Chart with Peak-Shaving Highlight Window */}
-        <div className="p-6 lg:p-8 rounded-3xl bg-slate-900/80 border border-slate-800 shadow-[0_10px_40px_rgba(0,0,0,0.5)] backdrop-blur-2xl">
+        <div className="p-6 lg:p-8 rounded-3xl bg-slate-900/80 border border-slate-800 shadow-[0_10px_40px_rgba(0,0,0,0.5)] backdrop-blur-2xl mb-8">
           
           {/* Chart Header & Filters */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 mb-6 border-b border-slate-800 gap-4">
             <div>
               <div className="flex items-center space-x-2">
                 <h3 className="text-lg font-bold text-white">
-                  Solar Supply vs Campus Demand & Peak-Shaving Intervention
+                  {viewMode === 'live' 
+                    ? 'Live 1-Second Telemetry Stream (Solar, Demand & Battery Flow)' 
+                    : 'Solar Supply vs Campus Demand & Peak-Shaving Intervention'}
                 </h3>
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">
-                  AI PREDICTIVE DISPATCH
+                  {viewMode === 'live' ? 'FASTAPI SSE STREAM' : 'AI PREDICTIVE DISPATCH'}
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-1">
-                Comparing unoptimized grid consumption against GridSense battery-dispatched microgrid.
+                {viewMode === 'live' 
+                  ? 'Real-time telemetry buffer rolling every 1000ms.' 
+                  : 'Comparing unoptimized grid consumption against GridSense battery-dispatched microgrid.'}
               </p>
             </div>
 
             {/* Toggle peak shaving window highlight */}
             <div className="flex items-center space-x-3">
-              <button
-                onClick={() => setShowPeakWindow(!showPeakWindow)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all flex items-center space-x-1.5 ${
-                  showPeakWindow
-                    ? 'bg-amber-500/20 border-amber-500/40 text-amber-300'
-                    : 'bg-slate-800 border-slate-700 text-slate-400'
-                }`}
-              >
-                <Sparkles className="w-3.5 h-3.5" />
-                <span>{showPeakWindow ? 'Peak-Shave Window: ON' : 'Show Peak Window'}</span>
-              </button>
+              {viewMode === '24h' && (
+                <button
+                  onClick={() => setShowPeakWindow(!showPeakWindow)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all flex items-center space-x-1.5 ${
+                    showPeakWindow
+                      ? 'bg-amber-500/20 border-amber-500/40 text-amber-300'
+                      : 'bg-slate-800 border-slate-700 text-slate-400'
+                  }`}
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  <span>{showPeakWindow ? 'Peak-Shave Window: ON' : 'Show Peak Window'}</span>
+                </button>
+              )}
             </div>
           </div>
 
           {/* Recharts Area Container */}
           <div className="h-[380px] w-full">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={hourlyData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+              <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                 <defs>
-                  {/* Solar gradient */}
                   <linearGradient id="solarGradient" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.4}/>
                     <stop offset="95%" stopColor="#f59e0b" stopOpacity={0.0}/>
                   </linearGradient>
-                  {/* Demand gradient */}
                   <linearGradient id="demandGradient" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#a855f7" stopOpacity={0.3}/>
                     <stop offset="95%" stopColor="#a855f7" stopOpacity={0.0}/>
                   </linearGradient>
-                  {/* Optimized Grid gradient */}
                   <linearGradient id="gridGradient" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
                     <stop offset="95%" stopColor="#10b981" stopOpacity={0.0}/>
@@ -273,8 +317,8 @@ export default function PredictiveDashboard() {
                   wrapperStyle={{ fontSize: '12px', color: '#cbd5e1' }}
                 />
 
-                {/* Highlight Peak-Shaving Window (12:00 to 18:00) */}
-                {showPeakWindow && (
+                {/* Highlight Peak-Shaving Window on 24h view */}
+                {viewMode === '24h' && showPeakWindow && (
                   <ReferenceArea 
                     x1="12:00" 
                     x2="18:00" 
@@ -308,7 +352,7 @@ export default function PredictiveDashboard() {
                 <Area 
                   type="monotone" 
                   dataKey="demand" 
-                  name="Campus Demand" 
+                  name="Campus Demand (kW)" 
                   stroke="#a855f7" 
                   fillOpacity={1} 
                   fill="url(#demandGradient)" 
@@ -319,7 +363,7 @@ export default function PredictiveDashboard() {
                 <Area 
                   type="monotone" 
                   dataKey="solar" 
-                  name="Predicted Solar PV" 
+                  name="Solar PV (kW)" 
                   stroke="#f59e0b" 
                   fillOpacity={1} 
                   fill="url(#solarGradient)" 
@@ -330,7 +374,7 @@ export default function PredictiveDashboard() {
                 <Area 
                   type="monotone" 
                   dataKey="optimizedGrid" 
-                  name="Actual Grid Import (GridSense)" 
+                  name="Net Grid Import (kW)" 
                   stroke="#10b981" 
                   fillOpacity={1} 
                   fill="url(#gridGradient)" 
@@ -352,6 +396,103 @@ export default function PredictiveDashboard() {
             <div className="text-emerald-400 font-bold font-mono">
               Avoided Peak Penalty: ₹11,200/day
             </div>
+          </div>
+
+        </div>
+
+        {/* Live Anomaly Alerts & Autonomous Mitigation Center */}
+        <div className="p-6 lg:p-8 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-2xl backdrop-blur-2xl">
+          
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 mb-6 border-b border-slate-800 gap-4">
+            <div>
+              <div className="flex items-center space-x-2.5">
+                <div className="p-2 rounded-xl bg-rose-500/10 border border-rose-500/30">
+                  <ShieldAlert className="w-5 h-5 text-rose-400" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                    <span>Live Anomaly Detection & Autonomous Mitigations</span>
+                    <span className="text-xs px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">
+                      {alerts.length} Captured
+                    </span>
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-0.5">
+                    FastAPI Anomaly Engine continuously validates grid compliance thresholds (Voltage, Frequency, Overloads).
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Interactive Demo Anomaly Trigger Buttons for Investor Pitches */}
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-[11px] font-semibold text-slate-400 mr-1">Pitch Demo Trigger:</span>
+              <button
+                disabled={triggering}
+                onClick={() => handleTriggerAnomaly('VOLTAGE_SAG')}
+                className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-300 transition-all disabled:opacity-50"
+              >
+                Inject Voltage Sag (&lt;200V)
+              </button>
+              <button
+                disabled={triggering}
+                onClick={() => handleTriggerAnomaly('LINE_OVERLOAD')}
+                className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 transition-all disabled:opacity-50"
+              >
+                Inject Peak Surge (&gt;500kW)
+              </button>
+              <button
+                disabled={triggering}
+                onClick={() => handleTriggerAnomaly('FREQUENCY_SPIKE')}
+                className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/40 text-cyan-300 transition-all disabled:opacity-50"
+              >
+                Inject Freq Spike
+              </button>
+            </div>
+          </div>
+
+          {/* Active Alerts List */}
+          <div className="space-y-3 max-h-72 overflow-y-auto pr-1">
+            {alerts.length > 0 ? (
+              alerts.slice(0, 5).map((alert) => (
+                <div
+                  key={alert.alert_id}
+                  className={`p-4 rounded-2xl border transition-all flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 ${
+                    alert.severity === 'CRITICAL'
+                      ? 'bg-rose-950/40 border-rose-500/40 shadow-[0_0_20px_rgba(244,63,94,0.15)]'
+                      : 'bg-amber-950/40 border-amber-500/40'
+                  }`}
+                >
+                  <div className="flex items-start space-x-3">
+                    <div className={`p-2 rounded-xl mt-0.5 ${alert.severity === 'CRITICAL' ? 'bg-rose-500/20 text-rose-400' : 'bg-amber-500/20 text-amber-400'}`}>
+                      <AlertTriangle className="w-4 h-4" />
+                    </div>
+                    <div>
+                      <div className="flex items-center space-x-2">
+                        <span className="text-xs font-bold text-white">{alert.node_name}</span>
+                        <span className={`text-[10px] font-black px-2 py-0.5 rounded ${
+                          alert.severity === 'CRITICAL' ? 'bg-rose-500/30 text-rose-300 border border-rose-500/40' : 'bg-amber-500/30 text-amber-300 border border-amber-500/40'
+                        }`}>
+                          {alert.severity} • {alert.anomaly_type}
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-300 mt-1">{alert.message}</p>
+                      <div className="text-[11px] text-emerald-400 font-semibold mt-1 flex items-center gap-1.5">
+                        <Zap className="w-3.5 h-3.5" />
+                        <span>Autonomous Action: {alert.mitigation_action}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="text-right sm:flex-shrink-0 text-xs text-slate-400 font-mono">
+                    {new Date(alert.timestamp).toLocaleTimeString()}
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="text-center py-8 text-slate-500 text-xs">
+                All 3 grid nodes operating within nominal boundaries. No active anomalies.
+              </div>
+            )}
           </div>
 
         </div>
