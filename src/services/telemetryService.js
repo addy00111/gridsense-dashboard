@@ -1,5 +1,10 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'https://gridsense-dashboard-7gqv.onrender.com';
-const WS_BASE_URL = import.meta.env.VITE_WS_BASE_URL || 'wss://gridsense-dashboard-7gqv.onrender.com';
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL && import.meta.env.VITE_API_BASE_URL.trim() !== '')
+  ? import.meta.env.VITE_API_BASE_URL
+  : 'https://gridsense-dashboard-7gqv.onrender.com';
+
+const WS_BASE_URL = (import.meta.env.VITE_WS_BASE_URL && import.meta.env.VITE_WS_BASE_URL.trim() !== '')
+  ? import.meta.env.VITE_WS_BASE_URL
+  : 'wss://gridsense-dashboard-7gqv.onrender.com';
 
 export async function fetchTelemetrySnapshot() {
   try {
