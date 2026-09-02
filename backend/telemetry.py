@@ -2,7 +2,7 @@ import math
 import random
 import time
 from datetime import datetime, timezone
-from typing import List, Dict, Tuple
+from typing import List, Dict, Tuple, Optional
 from models import GridNodeTelemetry, AnomalyAlert, TelemetrySnapshot
 
 class GridTelemetryEngine:
@@ -94,7 +94,7 @@ class GridTelemetryEngine:
             current_a=solar_current,
             power_factor=solar_pf,
             active_power_kw=base_solar_kw,
-            reactive_power_kvar=round(base_solar_kw * math.tan(math.acos(min(1.0, solar_pf))), 2),
+            reactive_power_kvar=round(base_solar_kw * math.tan(math.acos(max(-1.0, min(1.0, solar_pf)))), 2),
             frequency_hz=solar_hz,
             status=solar_status
         )
@@ -189,7 +189,7 @@ class GridTelemetryEngine:
             current_a=campus_current,
             power_factor=campus_pf,
             active_power_kw=base_demand_kw,
-            reactive_power_kvar=round(base_demand_kw * math.tan(math.acos(min(1.0, campus_pf))), 2),
+            reactive_power_kvar=round(base_demand_kw * math.tan(math.acos(max(-1.0, min(1.0, campus_pf)))), 2),
             frequency_hz=campus_hz,
             status=campus_status
         )
