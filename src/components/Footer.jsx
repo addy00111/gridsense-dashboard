@@ -63,28 +63,28 @@ export default function Footer({ onOpenPitchDeck, onOpenSchedule }) {
               </li>
               <li>
                 <a href="#roi-calculator" className="hover:text-emerald-400 transition-colors">
-                  Investor ROI Calculator
+                  Campus ROI Calculator
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Nav Col 2: Pitch Deck & Contact (4 cols) */}
+          {/* Nav Col 2: Platform & Contact (4 cols) */}
           <div className="md:col-span-4">
             <h4 className="text-xs font-bold text-slate-200 uppercase tracking-wider mb-4">
-              Investor Resources
+              PLATFORM & CONTACT
             </h4>
             <div className="space-y-3">
-              <button
-                onClick={onOpenPitchDeck}
+              <a
+                href="#architecture"
                 className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl bg-slate-900 border border-slate-800 hover:border-teal-500/50 text-slate-200 text-xs font-semibold transition-all group"
               >
                 <span className="flex items-center space-x-2">
-                  <Presentation className="w-4 h-4 text-teal-400" />
-                  <span>View Full Pitch Deck</span>
+                  <Cpu className="w-4 h-4 text-teal-400" />
+                  <span>Explore System Architecture</span>
                 </span>
                 <span className="text-slate-500 group-hover:text-teal-400 transition-colors">→</span>
-              </button>
+              </a>
 
               <button
                 onClick={onOpenSchedule}
@@ -92,7 +92,7 @@ export default function Footer({ onOpenPitchDeck, onOpenSchedule }) {
               >
                 <span className="flex items-center space-x-2">
                   <Calendar className="w-4 h-4 text-emerald-400" />
-                  <span>Book Investor Briefing</span>
+                  <span>Schedule Campus Demo</span>
                 </span>
                 <span className="text-emerald-400">→</span>
               </button>

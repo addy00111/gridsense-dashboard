@@ -79,7 +79,7 @@ export default function Navbar({ onOpenPitchDeck, onOpenSchedule, isBackendOnlin
               <span className="absolute inset-0 bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500 rounded-xl group-hover:opacity-100 opacity-90 transition-opacity"></span>
               <div className="relative px-4 py-2 rounded-[11px] bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 text-white flex items-center space-x-2 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
                 <Calendar className="w-4 h-4" />
-                <span>Schedule Investor Pitch</span>
+                <span>Schedule Demo</span>
               </div>
             </button>
           </div>
@@ -147,7 +147,7 @@ export default function Navbar({ onOpenPitchDeck, onOpenSchedule, isBackendOnlin
               className="w-full flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg"
             >
               <Calendar className="w-4 h-4" />
-              <span>Schedule Pitch</span>
+              <span>Schedule Demo</span>
             </button>
           </div>
         </div>
