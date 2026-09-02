@@ -403,14 +403,14 @@ export default function PredictiveDashboard() {
         {/* Live Anomaly Alerts & Autonomous Mitigation Center */}
         <div className="p-6 lg:p-8 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-2xl backdrop-blur-2xl">
           
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 mb-6 border-b border-slate-800 gap-4">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between pb-6 mb-6 border-b border-slate-800 gap-4">
             <div>
-              <div className="flex items-center space-x-2.5">
-                <div className="p-2 rounded-xl bg-rose-500/10 border border-rose-500/30">
+              <div className="flex items-start space-x-2.5">
+                <div className="p-2 rounded-xl bg-rose-500/10 border border-rose-500/30 mt-0.5">
                   <ShieldAlert className="w-5 h-5 text-rose-400" />
                 </div>
                 <div>
-                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                  <h3 className="text-lg font-bold text-white flex items-center gap-2 flex-wrap">
                     <span>Live Anomaly Detection & Autonomous Mitigations</span>
                     <span className="text-xs px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300 border border-rose-500/30">
                       {alerts.length} Captured
@@ -423,29 +423,31 @@ export default function PredictiveDashboard() {
               </div>
             </div>
 
-            {/* Interactive Demo Anomaly Trigger Buttons for Investor Pitches */}
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="text-[11px] font-semibold text-slate-400 mr-1">Pitch Demo Trigger:</span>
+            {/* Interactive Synthetic Anomaly Event Simulation Buttons */}
+            <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap w-full lg:w-auto overflow-x-auto pb-1 sm:pb-0">
+              <span className="text-[11px] font-semibold text-slate-400 whitespace-nowrap mr-1">
+                Simulate Grid Event:
+              </span>
               <button
                 disabled={triggering}
                 onClick={() => handleTriggerAnomaly('VOLTAGE_SAG')}
-                className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-300 transition-all disabled:opacity-50"
+                className="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-rose-500/20 hover:bg-rose-500/30 border border-rose-500/40 text-rose-300 transition-all disabled:opacity-50 whitespace-nowrap flex-shrink-0"
               >
                 Inject Voltage Sag (&lt;200V)
               </button>
               <button
                 disabled={triggering}
                 onClick={() => handleTriggerAnomaly('LINE_OVERLOAD')}
-                className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 transition-all disabled:opacity-50"
+                className="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 transition-all disabled:opacity-50 whitespace-nowrap flex-shrink-0"
               >
                 Inject Peak Surge (&gt;500kW)
               </button>
               <button
                 disabled={triggering}
                 onClick={() => handleTriggerAnomaly('FREQUENCY_SPIKE')}
-                className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/40 text-cyan-300 transition-all disabled:opacity-50"
+                className="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/40 text-cyan-300 transition-all disabled:opacity-50 whitespace-nowrap flex-shrink-0"
               >
-                Inject Freq Spike
+                Inject Freq Spike (&gt;50.5Hz)
               </button>
             </div>
           </div>
