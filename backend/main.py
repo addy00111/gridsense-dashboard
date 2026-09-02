@@ -143,14 +143,14 @@ async def stream_telemetry_sse():
     async def event_generator():
         while True:
             snapshot = engine.generate_snapshot()
-            yield f"data: {snapshot.model_dump_json()}\n\n"
+            yield f": ping\n\ndata: {snapshot.model_dump_json()}\n\n"
             await asyncio.sleep(1.0)
 
     return StreamingResponse(
         event_generator(),
         media_type="text/event-stream",
         headers={
-            "Cache-Control": "no-cache",
+            "Cache-Control": "no-cache, no-transform",
             "Connection": "keep-alive",
             "X-Accel-Buffering": "no"
         }

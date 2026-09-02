@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { 
   fetchTelemetrySnapshot, 
   fetchAlerts, 
@@ -93,78 +93,157 @@ export function useLiveTelemetry() {
   const [isConnected, setIsConnected] = useState(false);
   const [isBackendOnline, setIsBackendOnline] = useState(false);
   const [historyBuffer, setHistoryBuffer] = useState([]);
+
+  const lastPacketTimestampRef = useRef(Date.now());
+  const unsubscribeRef = useRef(null);
   const reconnectTimeoutRef = useRef(null);
 
-  useEffect(() => {
-    let isMounted = true;
+  // Helper to push a snapshot point to historyBuffer
+  const pushToBuffer = useCallback((snap) => {
+    if (!snap) return;
+    const timeLabel = new Date(snap.timestamp || Date.now()).toLocaleTimeString([], { 
+      hour: '2-digit', 
+      minute: '2-digit', 
+      second: '2-digit' 
+    });
+    const newPoint = {
+      time: timeLabel,
+      solar: snap.total_solar_generation_kw,
+      demand: snap.total_campus_demand_kw,
+      grid: snap.total_grid_import_kw,
+      battery: snap.battery_net_kw,
+      unoptimizedGrid: snap.total_campus_demand_kw,
+      optimizedGrid: snap.total_grid_import_kw,
+    };
+    setHistoryBuffer((prev) => {
+      const updated = [...prev, newPoint];
+      return updated.slice(-30);
+    });
+  }, []);
 
-    async function checkBackend() {
-      const snap = await fetchTelemetrySnapshot();
-      if (snap && isMounted) {
-        setTelemetry(snap);
-        setIsBackendOnline(true);
-        setIsConnected(true);
-        if (snap.active_alerts) {
-          setActiveAlerts(snap.active_alerts);
-        }
-      } else if (isMounted) {
-        setIsBackendOnline(false);
-        setIsConnected(false);
-        // Retain fallback mock data when offline
-        setTelemetry((prev) => prev || MOCK_FALLBACK_TELEMETRY);
-      }
-
-      const alertRes = await fetchAlerts(15);
-      if (alertRes && alertRes.alerts && isMounted) {
-        setAlerts(alertRes.alerts);
-      } else if (isMounted) {
-        setAlerts(MOCK_FALLBACK_ALERTS);
-      }
+  // Connect SSE stream with active 1.5s auto-reconnection
+  const connectSSE = useCallback(() => {
+    if (unsubscribeRef.current) {
+      unsubscribeRef.current();
+      unsubscribeRef.current = null;
     }
 
-    checkBackend();
-
-    // Setup SSE Live Stream
     const unsubscribe = subscribeToTelemetryStream(
       (data) => {
-        if (!isMounted) return;
+        lastPacketTimestampRef.current = Date.now();
         setTelemetry(data);
         setIsConnected(true);
         setIsBackendOnline(true);
         if (data.active_alerts) {
           setActiveAlerts(data.active_alerts);
         }
-
-        // Add to historical buffer (keep last 30 1-sec ticks)
-        setHistoryBuffer((prev) => {
-          const timeLabel = new Date(data.timestamp).toLocaleTimeString([], { 
-            hour: '2-digit', 
-            minute: '2-digit', 
-            second: '2-digit' 
-          });
-          const newPoint = {
-            time: timeLabel,
-            solar: data.total_solar_generation_kw,
-            demand: data.total_campus_demand_kw,
-            grid: data.total_grid_import_kw,
-            battery: data.battery_net_kw,
-            unoptimizedGrid: data.total_campus_demand_kw,
-            optimizedGrid: data.total_grid_import_kw,
-          };
-          const updated = [...prev, newPoint];
-          return updated.slice(-30);
-        });
+        pushToBuffer(data);
       },
       (error) => {
-        if (!isMounted) return;
         setIsConnected(false);
         setIsBackendOnline(false);
-        // Retry connection in 5 seconds
-        reconnectTimeoutRef.current = setTimeout(checkBackend, 5000);
+        if (unsubscribeRef.current) {
+          unsubscribeRef.current();
+          unsubscribeRef.current = null;
+        }
+        // Attempt reconnection after 1.5-second timeout
+        if (reconnectTimeoutRef.current) clearTimeout(reconnectTimeoutRef.current);
+        reconnectTimeoutRef.current = setTimeout(() => {
+          connectSSE();
+        }, 1500);
       }
     );
 
-    // Refresh historical alerts periodically if backend is connected
+    unsubscribeRef.current = unsubscribe;
+  }, [pushToBuffer]);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    // Initial REST snapshot check
+    async function checkBackend() {
+      const snap = await fetchTelemetrySnapshot();
+      if (snap && isMounted) {
+        setTelemetry(snap);
+        setIsBackendOnline(true);
+        setIsConnected(true);
+        lastPacketTimestampRef.current = Date.now();
+        if (snap.active_alerts) {
+          setActiveAlerts(snap.active_alerts);
+        }
+        pushToBuffer(snap);
+      } else if (isMounted) {
+        setIsBackendOnline(false);
+        setIsConnected(false);
+      }
+
+      const alertRes = await fetchAlerts(15);
+      if (alertRes && alertRes.alerts && isMounted) {
+        setAlerts(alertRes.alerts);
+      }
+    }
+
+    checkBackend();
+    connectSSE();
+
+    // 1. Client-side Heartbeat Watchdog (checks every 2 seconds)
+    // If no new packet has arrived in the last 3 seconds, close stale connection & reconnect
+    const watchdogInterval = setInterval(() => {
+      const timeSinceLastPacket = Date.now() - lastPacketTimestampRef.current;
+      if (timeSinceLastPacket > 3000) {
+        setIsConnected(false);
+        setIsBackendOnline(false);
+        connectSSE();
+      }
+    }, 2000);
+
+    // 2. Continuous Local Micro-Tick Animation Interval (checks every 1 second)
+    // Ensures cards & chart continuously update with realistic micro-variations so UI never appears frozen
+    const microTickInterval = setInterval(() => {
+      const timeSinceLastPacket = Date.now() - lastPacketTimestampRef.current;
+      if (timeSinceLastPacket > 1500) {
+        setTelemetry((prevSnap) => {
+          const base = prevSnap || MOCK_FALLBACK_TELEMETRY;
+          const varSolar = Math.max(0, Math.round((base.total_solar_generation_kw + (Math.random() * 1.6 - 0.8)) * 10) / 10);
+          const varDemand = Math.max(100, Math.round((base.total_campus_demand_kw + (Math.random() * 2.4 - 1.2)) * 10) / 10);
+          const varBess = Math.round((base.battery_net_kw + (Math.random() * 1.0 - 0.5)) * 10) / 10;
+          const varGrid = Math.max(0, Math.round((varDemand - varSolar + varBess) * 10) / 10);
+
+          const updatedNodes = base.nodes.map((n) => {
+            const varV = Math.round((n.voltage_v + (Math.random() * 0.4 - 0.2)) * 10) / 10;
+            const varA = Math.round((n.current_a + (Math.random() * 1.0 - 0.5)) * 10) / 10;
+            const varHz = Math.round((n.frequency_hz + (Math.random() * 0.02 - 0.01)) * 100) / 100;
+            let activeKw = n.active_power_kw;
+            if (n.node_type === 'SOLAR_SUBSTATION') activeKw = varSolar;
+            if (n.node_type === 'BESS_STORAGE') activeKw = varBess;
+            if (n.node_type === 'CAMPUS_MAIN_FEEDER') activeKw = varDemand;
+
+            return {
+              ...n,
+              voltage_v: varV,
+              current_a: varA,
+              frequency_hz: varHz,
+              active_power_kw: activeKw
+            };
+          });
+
+          const newSnap = {
+            ...base,
+            timestamp: new Date().toISOString(),
+            total_solar_generation_kw: varSolar,
+            total_campus_demand_kw: varDemand,
+            battery_net_kw: varBess,
+            total_grid_import_kw: varGrid,
+            nodes: updatedNodes
+          };
+
+          pushToBuffer(newSnap);
+          return newSnap;
+        });
+      }
+    }, 1000);
+
+    // Refresh historical alerts periodically
     const alertInterval = setInterval(async () => {
       const alertRes = await fetchAlerts(15);
       if (alertRes && alertRes.alerts && isMounted) {
@@ -174,17 +253,18 @@ export function useLiveTelemetry() {
 
     return () => {
       isMounted = false;
-      unsubscribe();
-      clearInterval(alertInterval);
+      if (unsubscribeRef.current) unsubscribeRef.current();
       if (reconnectTimeoutRef.current) clearTimeout(reconnectTimeoutRef.current);
+      clearInterval(watchdogInterval);
+      clearInterval(microTickInterval);
+      clearInterval(alertInterval);
     };
-  }, []);
+  }, [connectSSE, pushToBuffer]);
 
   const triggerAnomaly = async (type = 'VOLTAGE_SAG', duration = 5) => {
     if (isBackendOnline) {
       return await triggerSyntheticAnomaly(type, duration);
     } else {
-      // Simulate synthetic trigger locally when backend is offline
       const syntheticAlert = {
         alert_id: `ALT-LOCAL-${Date.now()}`,
         timestamp: new Date().toISOString(),

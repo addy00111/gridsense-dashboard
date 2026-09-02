@@ -51,13 +51,16 @@ export async function triggerSyntheticAnomaly(anomalyType = 'VOLTAGE_SAG', durat
 }
 
 export function subscribeToTelemetryStream(onData, onError) {
+  let eventSource = null;
   try {
-    const eventSource = new EventSource(`${API_BASE_URL}/api/v1/stream`);
+    eventSource = new EventSource(`${API_BASE_URL}/api/v1/stream`);
     
     eventSource.onmessage = (event) => {
       try {
-        const parsed = JSON.parse(event.data);
-        onData(parsed);
+        if (event.data && event.data.trim() !== '') {
+          const parsed = JSON.parse(event.data);
+          onData(parsed);
+        }
       } catch (e) {
         console.error('[GridSense SSE] Error parsing message:', e);
       }
@@ -65,11 +68,15 @@ export function subscribeToTelemetryStream(onData, onError) {
 
     eventSource.onerror = (err) => {
       if (onError) onError(err);
-      eventSource.close();
+      if (eventSource) {
+        eventSource.close();
+      }
     };
 
     return () => {
-      eventSource.close();
+      if (eventSource) {
+        eventSource.close();
+      }
     };
   } catch (err) {
     if (onError) onError(err);
