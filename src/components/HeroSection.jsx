@@ -80,7 +80,7 @@ export default function HeroSection({ onOpenPitchDeck, onOpenSchedule }) {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
             </span>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-cyan-300">
-              GridSense Seed Round Deck • Autonomous Campus Microgrids
+              Next-Gen Energy Intelligence • Autonomous Campus Microgrids
             </span>
           </div>
         </div>
@@ -124,14 +124,6 @@ export default function HeroSection({ onOpenPitchDeck, onOpenSchedule }) {
           >
             <Layers className="w-5 h-5 text-teal-400" />
             <span>Explore Pitch Deck</span>
-          </button>
-
-          <button
-            onClick={onOpenSchedule}
-            className="px-6 py-3.5 rounded-xl bg-emerald-950/40 hover:bg-emerald-950/70 border border-emerald-500/40 text-emerald-300 font-semibold text-sm sm:text-base transition-all duration-200 flex items-center space-x-2"
-          >
-            <Sparkles className="w-5 h-5 text-emerald-400" />
-            <span>Seed Pitch Deck</span>
           </button>
         </div>
 

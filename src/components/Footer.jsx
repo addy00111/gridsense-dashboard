@@ -38,13 +38,6 @@ export default function Footer({ onOpenPitchDeck, onOpenSchedule }) {
             <p className="text-sm text-slate-400 leading-relaxed max-w-sm mb-6">
               AI-Powered Smart Energy Management for Green Campuses. Autonomous microgrid dispatch minimizing expensive peak grid reliance while maximizing rooftop solar utilization.
             </p>
-
-            <div className="flex items-center space-x-3">
-              <span className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-semibold">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping"></span>
-                <span>Seed Round Active • $1.2M Target</span>
-              </span>
-            </div>
           </div>
 
           {/* Nav Col 1: Platform Sections (3 cols) */}
