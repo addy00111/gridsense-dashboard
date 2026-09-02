@@ -39,7 +39,7 @@ export default function EnergyFlowSimulator() {
       accentColor: 'text-emerald-400',
       borderColor: 'border-emerald-500/50',
       bgGlow: 'rgba(16, 185, 129, 0.2)',
-      liveHighlight: isConnected ? 'Streaming continuous 1-second Modbus telemetry from FastAPI.' : 'Attempting reconnection to http://localhost:8000...'
+      liveHighlight: isConnected ? 'Streaming continuous 1-second Modbus telemetry from FastAPI Cloud.' : 'Attempting reconnection to https://gridsense-dashboard-7gqv.onrender.com...'
     },
     A: {
       id: 'A',
@@ -161,7 +161,7 @@ export default function EnergyFlowSimulator() {
               Interactive Microgrid <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Energy Flow Simulator</span>
             </h2>
             <p className="text-slate-400 text-sm sm:text-base mt-2 max-w-2xl">
-              Connected live to GridSense Python FastAPI telemetry engine at <code className="text-emerald-300 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800 font-mono text-xs">http://localhost:8000</code>.
+              Connected live to GridSense Python FastAPI telemetry engine at <code className="text-emerald-300 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800 font-mono text-xs">https://gridsense-dashboard-7gqv.onrender.com</code>.
             </p>
           </div>
 
