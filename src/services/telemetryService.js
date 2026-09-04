@@ -19,6 +19,32 @@ export async function fetchTelemetrySnapshot() {
   }
 }
 
+export async function fetchWeatherData() {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/weather`, {
+      headers: { 'Accept': 'application/json' },
+    });
+    if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+    return await res.json();
+  } catch (err) {
+    console.warn('[GridSense API] Weather fetch failed:', err.message);
+    return null;
+  }
+}
+
+export async function fetchBaselineComparison() {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/v1/baseline`, {
+      headers: { 'Accept': 'application/json' },
+    });
+    if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+    return await res.json();
+  } catch (err) {
+    console.warn('[GridSense API] Baseline fetch failed:', err.message);
+    return null;
+  }
+}
+
 export async function fetchAlerts(limit = 20) {
   try {
     const res = await fetch(`${API_BASE_URL}/api/v1/alerts?limit=${limit}`, {

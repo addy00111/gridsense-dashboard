@@ -6,45 +6,45 @@ import {
   Sparkles, 
   ArrowRight, 
   Zap, 
-  ShieldAlert, 
   Coins, 
   Layers,
-  ChevronDown
+  ChevronDown,
+  CloudSun
 } from 'lucide-react';
 
 export default function HeroSection({ onOpenPitchDeck, onOpenSchedule }) {
   const quickStats = [
     {
-      label: "Grid Peak Savings",
-      value: "21%",
-      sub: "Peak tariff reduction",
+      label: "Pilot Peak Shaved",
+      value: "24.5%",
+      sub: "Hostel Block A load curve",
       icon: TrendingDown,
       color: "text-emerald-400",
       bg: "bg-emerald-500/10",
       border: "border-emerald-500/30"
     },
     {
-      label: "Renewable Share",
-      value: "68%",
-      sub: "Campus clean energy",
+      label: "Solar Direct Share",
+      value: "72%",
+      sub: "40 kWp Rooftop Solar PV",
       icon: SunMedium,
       color: "text-cyan-400",
       bg: "bg-cyan-500/10",
       border: "border-cyan-500/30"
     },
     {
-      label: "AI Forecast Horizon",
-      value: "24 Hrs",
-      sub: "99.4% dispatch accuracy",
-      icon: Clock,
+      label: "Live Weather Sync",
+      value: "Open-Meteo",
+      sub: "Pune 18.52°N, 73.86°E",
+      icon: CloudSun,
       color: "text-purple-400",
       bg: "bg-purple-500/10",
       border: "border-purple-500/30"
     },
     {
-      label: "Annual Campus ROI",
-      value: "₹24.8L+",
-      sub: "< 2.8 yr payback period",
+      label: "Honest Pilot ROI",
+      value: "10.3%",
+      sub: "₹18,800/mo net savings",
       icon: Coins,
       color: "text-amber-400",
       bg: "bg-amber-500/10",
@@ -80,7 +80,7 @@ export default function HeroSection({ onOpenPitchDeck, onOpenSchedule }) {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400"></span>
             </span>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-teal-200 to-cyan-300">
-              Next-Gen Energy Intelligence • Autonomous Campus Microgrids
+              Live Pilot: Hostel Block A (Single Building) • Open-Meteo Weather Synced
             </span>
           </div>
         </div>
@@ -90,7 +90,7 @@ export default function HeroSection({ onOpenPitchDeck, onOpenSchedule }) {
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.1] mb-6">
             AI-Powered Smart Energy Management for{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-cyan-400">
-              Green Campuses
+              Hostel Block A Pilot
             </span>
           </h1>
 
@@ -103,7 +103,7 @@ export default function HeroSection({ onOpenPitchDeck, onOpenSchedule }) {
           </p>
 
           <p className="text-sm sm:text-base text-slate-400 max-w-2xl mx-auto">
-            GridSense synchronizes university solar generation, IoT sub-meters, and BESS storage with 24-hour predictive machine learning to autonomously minimize expensive grid consumption.
+            GridSense synchronizes 40 kWp rooftop solar, 45 kWh battery storage, and building sub-meters with live Open-Meteo Pune solar weather data to autonomously minimize expensive grid consumption.
           </p>
         </div>
 
