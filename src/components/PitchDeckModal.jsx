@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { 
-  X, 
-  ChevronLeft, 
-  ChevronRight, 
-  Presentation, 
-  Zap, 
-  ShieldAlert, 
-  Cpu, 
-  TrendingUp, 
-  Calculator, 
+import {
+  X,
+  ChevronLeft,
+  ChevronRight,
+  Presentation,
+  Zap,
+  ShieldAlert,
+  Cpu,
+  TrendingUp,
+  Calculator,
   CheckCircle2,
   Sparkles,
   Download,
@@ -150,7 +150,7 @@ export default function PitchDeckModal({ isOpen, onClose, onOpenSchedule }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl animate-in fade-in duration-200">
       <div className="relative w-full max-w-4xl bg-slate-950 border border-slate-800 rounded-3xl shadow-[0_0_80px_rgba(16,185,129,0.15)] overflow-hidden flex flex-col max-h-[90vh]">
-        
+
         {/* Top Header Bar */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-800/80 bg-slate-900/60">
           <div className="flex items-center space-x-3">
@@ -182,7 +182,7 @@ export default function PitchDeckModal({ isOpen, onClose, onOpenSchedule }) {
 
         {/* Slide Content Area */}
         <div className="p-6 sm:p-10 overflow-y-auto flex-1">
-          
+
           {/* Slide Tag & Number */}
           <div className="flex items-center justify-between mb-4">
             <span className="text-xs font-bold px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-emerald-400 uppercase tracking-wider">
@@ -223,7 +223,7 @@ export default function PitchDeckModal({ isOpen, onClose, onOpenSchedule }) {
 
         {/* Slide Footer Navigation */}
         <div className="flex items-center justify-between px-6 py-4 border-t border-slate-800/80 bg-slate-900/60">
-          
+
           <button
             onClick={() => setCurrentSlide(prev => Math.max(0, prev - 1))}
             disabled={currentSlide === 0}
@@ -239,11 +239,10 @@ export default function PitchDeckModal({ isOpen, onClose, onOpenSchedule }) {
               <button
                 key={idx}
                 onClick={() => setCurrentSlide(idx)}
-                className={`w-2.5 h-2.5 rounded-full transition-all ${
-                  currentSlide === idx 
-                    ? 'w-6 bg-emerald-400' 
-                    : 'bg-slate-700 hover:bg-slate-500'
-                }`}
+                className={`w-2.5 h-2.5 rounded-full transition-all ${currentSlide === idx
+                  ? 'w-6 bg-emerald-400'
+                  : 'bg-slate-700 hover:bg-slate-500'
+                  }`}
               />
             ))}
           </div>

@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { 
-  X, 
-  Calendar, 
-  Clock, 
-  Send, 
-  CheckCircle2, 
-  Building2, 
-  Mail, 
-  User, 
+import {
+  X,
+  Calendar,
+  Clock,
+  Send,
+  CheckCircle2,
+  Building2,
+  Mail,
+  User,
   Sparkles,
   ShieldCheck
 } from 'lucide-react';
@@ -46,7 +46,7 @@ export default function SchedulePitchModal({ isOpen, onClose }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xl animate-in fade-in duration-200">
       <div className="relative w-full max-w-lg bg-slate-950 border border-slate-800 rounded-3xl shadow-[0_0_80px_rgba(16,185,129,0.15)] overflow-hidden">
-        
+
         {/* Modal Header */}
         <div className="flex items-center justify-between px-6 py-5 border-b border-slate-800/80 bg-slate-900/60">
           <div className="flex items-center space-x-2.5">
@@ -90,7 +90,7 @@ export default function SchedulePitchModal({ isOpen, onClose }) {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
-              
+
               <div>
                 <label className="block text-xs font-semibold text-slate-300 mb-1.5">
                   Your Full Name

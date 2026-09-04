@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { 
-  CloudRain, 
-  TrendingUp, 
-  Trash2, 
-  Layers, 
-  Cpu, 
-  Database, 
-  BrainCircuit, 
-  Sliders, 
+import {
+  CloudRain,
+  TrendingUp,
+  Trash2,
+  Layers,
+  Cpu,
+  Database,
+  BrainCircuit,
+  Sliders,
   LayoutDashboard,
   ArrowRight,
   ShieldAlert,
@@ -127,12 +127,12 @@ export default function ProblemArchitecture() {
 
   return (
     <section id="architecture" className="py-20 bg-slate-950 relative overflow-hidden">
-      
+
       {/* Background ambient lighting */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-teal-500/10 blur-[150px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* ================= SECTION A: THE PROBLEM ================= */}
         <div className="mb-24">
           <div className="text-center max-w-3xl mx-auto mb-14">
@@ -204,11 +204,10 @@ export default function ProblemArchitecture() {
                 <button
                   key={step.step}
                   onClick={() => setActiveStep(idx)}
-                  className={`text-left p-5 rounded-2xl border transition-all duration-300 relative overflow-hidden flex flex-col justify-between ${
-                    isSelected 
-                      ? 'bg-slate-900/90 border-emerald-500/60 shadow-[0_0_30px_rgba(16,185,129,0.25)] ring-1 ring-emerald-500/40' 
-                      : 'bg-slate-900/40 border-slate-800/80 hover:bg-slate-900/70 hover:border-slate-700'
-                  }`}
+                  className={`text-left p-5 rounded-2xl border transition-all duration-300 relative overflow-hidden flex flex-col justify-between ${isSelected
+                    ? 'bg-slate-900/90 border-emerald-500/60 shadow-[0_0_30px_rgba(16,185,129,0.25)] ring-1 ring-emerald-500/40'
+                    : 'bg-slate-900/40 border-slate-800/80 hover:bg-slate-900/70 hover:border-slate-700'
+                    }`}
                 >
                   <div>
                     <div className="flex items-center justify-between mb-3">
@@ -219,7 +218,7 @@ export default function ProblemArchitecture() {
                         <Icon className="w-4 h-4" />
                       </div>
                     </div>
-                    
+
                     <h4 className={`text-sm font-bold mb-0.5 ${isSelected ? 'text-white' : 'text-slate-200'}`}>
                       {step.title}
                     </h4>
@@ -241,7 +240,7 @@ export default function ProblemArchitecture() {
           {activeStep !== null && (
             <div className="p-6 lg:p-8 rounded-3xl bg-slate-900/80 border border-slate-800 backdrop-blur-xl shadow-2xl relative overflow-hidden">
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center">
-                
+
                 <div className="lg:col-span-2">
                   <div className="flex items-center space-x-3 mb-2">
                     <span className="text-xs font-black px-2.5 py-1 rounded bg-emerald-500/20 text-emerald-300 font-mono border border-emerald-500/30">
@@ -251,14 +250,14 @@ export default function ProblemArchitecture() {
                       {architectureSteps[activeStep].title}
                     </h3>
                   </div>
-                  
+
                   <p className="text-sm text-slate-300 leading-relaxed mb-4">
                     {architectureSteps[activeStep].desc}
                   </p>
 
                   <div className="flex flex-wrap gap-2">
                     {architectureSteps[activeStep].specs.map((spec, sIdx) => (
-                      <span 
+                      <span
                         key={sIdx}
                         className="inline-flex items-center space-x-1.5 px-3 py-1 rounded-lg bg-slate-950 border border-slate-800 text-xs font-medium text-emerald-300"
                       >

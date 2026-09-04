@@ -17,9 +17,9 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#060913] text-slate-100 font-sans selection:bg-emerald-500 selection:text-slate-950">
-      
+
       {/* Top Navigation */}
-      <Navbar 
+      <Navbar
         onOpenPitchDeck={() => setPitchDeckOpen(true)}
         onOpenSchedule={() => setScheduleOpen(true)}
         isBackendOnline={isBackendOnline}
@@ -28,7 +28,7 @@ export default function App() {
       {/* Main Content Sections */}
       <main>
         {/* 1. Hero & Value Proposition */}
-        <HeroSection 
+        <HeroSection
           onOpenPitchDeck={() => setPitchDeckOpen(true)}
           onOpenSchedule={() => setScheduleOpen(true)}
         />
@@ -43,25 +43,25 @@ export default function App() {
         <ProblemArchitecture />
 
         {/* 5. Interactive Investor ROI & Impact Calculator */}
-        <RoiCalculator 
+        <RoiCalculator
           onOpenSchedule={() => setScheduleOpen(true)}
         />
       </main>
 
       {/* Footer */}
-      <Footer 
+      <Footer
         onOpenPitchDeck={() => setPitchDeckOpen(true)}
         onOpenSchedule={() => setScheduleOpen(true)}
       />
 
       {/* Interactive Modals */}
-      <PitchDeckModal 
+      <PitchDeckModal
         isOpen={pitchDeckOpen}
         onClose={() => setPitchDeckOpen(false)}
         onOpenSchedule={() => setScheduleOpen(true)}
       />
 
-      <SchedulePitchModal 
+      <SchedulePitchModal
         isOpen={scheduleOpen}
         onClose={() => setScheduleOpen(false)}
       />

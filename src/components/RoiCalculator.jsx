@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { 
-  Calculator, 
-  Building2, 
-  IndianRupee, 
-  DollarSign, 
-  TrendingUp, 
-  Leaf, 
-  ShieldCheck, 
-  Zap, 
+import {
+  Calculator,
+  Building2,
+  IndianRupee,
+  DollarSign,
+  TrendingUp,
+  Leaf,
+  ShieldCheck,
+  Zap,
   Sparkles,
   ArrowRight,
   PieChart,
@@ -18,7 +18,7 @@ export default function RoiCalculator({ onOpenSchedule }) {
   const [buildingCount, setBuildingCount] = useState(12);
   const [currency, setCurrency] = useState('INR'); // 'INR' or 'USD'
   const [tariffRate, setTariffRate] = useState(11.5); // ₹ per kWh avg or $0.14
-  
+
   // Rate conversions
   const conversionRate = 84; // 1 USD = 84 INR approx
 
@@ -59,12 +59,12 @@ export default function RoiCalculator({ onOpenSchedule }) {
 
   return (
     <section id="roi-calculator" className="py-20 bg-[#060913] relative overflow-hidden">
-      
+
       {/* Background glow effects */}
       <div className="absolute -bottom-24 left-1/4 w-[600px] h-[400px] bg-emerald-500/10 blur-[140px] pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-bold uppercase tracking-wider mb-3">
@@ -81,7 +81,7 @@ export default function RoiCalculator({ onOpenSchedule }) {
 
         {/* Calculator Main Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          
+
           {/* Controls Column (5 cols) */}
           <div className="lg:col-span-5 p-6 lg:p-8 rounded-3xl bg-slate-900/90 border border-slate-800 shadow-2xl backdrop-blur-2xl flex flex-col justify-between">
             <div>
@@ -95,17 +95,15 @@ export default function RoiCalculator({ onOpenSchedule }) {
                 <div className="flex items-center space-x-1 p-1 rounded-lg bg-slate-950 border border-slate-800">
                   <button
                     onClick={() => setCurrency('INR')}
-                    className={`px-2.5 py-1 rounded text-xs font-bold transition-all ${
-                      currency === 'INR' ? 'bg-emerald-500 text-slate-950 shadow' : 'text-slate-400 hover:text-white'
-                    }`}
+                    className={`px-2.5 py-1 rounded text-xs font-bold transition-all ${currency === 'INR' ? 'bg-emerald-500 text-slate-950 shadow' : 'text-slate-400 hover:text-white'
+                      }`}
                   >
                     ₹ INR
                   </button>
                   <button
                     onClick={() => setCurrency('USD')}
-                    className={`px-2.5 py-1 rounded text-xs font-bold transition-all ${
-                      currency === 'USD' ? 'bg-emerald-500 text-slate-950 shadow' : 'text-slate-400 hover:text-white'
-                    }`}
+                    className={`px-2.5 py-1 rounded text-xs font-bold transition-all ${currency === 'USD' ? 'bg-emerald-500 text-slate-950 shadow' : 'text-slate-400 hover:text-white'
+                      }`}
                   >
                     $ USD
                   </button>
@@ -122,7 +120,7 @@ export default function RoiCalculator({ onOpenSchedule }) {
                     {buildingCount} <span className="text-xs font-normal text-slate-400">bldgs</span>
                   </span>
                 </div>
-                
+
                 <input
                   type="range"
                   min="1"
@@ -131,7 +129,7 @@ export default function RoiCalculator({ onOpenSchedule }) {
                   onChange={(e) => setBuildingCount(parseInt(e.target.value))}
                   className="w-full h-3 bg-slate-950 rounded-lg appearance-none cursor-pointer accent-emerald-400 border border-slate-800"
                 />
-                
+
                 <div className="flex justify-between text-[11px] text-slate-400 mt-2">
                   <span>1 Building (Pilot Testbed)</span>
                   <span>25 Bldgs (Medium University)</span>
@@ -153,11 +151,10 @@ export default function RoiCalculator({ onOpenSchedule }) {
                     <button
                       key={preset.count}
                       onClick={() => setBuildingCount(preset.count)}
-                      className={`px-3 py-2 rounded-xl text-xs font-semibold border transition-all ${
-                        buildingCount === preset.count
-                          ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300'
-                          : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
-                      }`}
+                      className={`px-3 py-2 rounded-xl text-xs font-semibold border transition-all ${buildingCount === preset.count
+                        ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300'
+                        : 'bg-slate-950/60 border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'
+                        }`}
                     >
                       {preset.label}
                     </button>
@@ -197,7 +194,7 @@ export default function RoiCalculator({ onOpenSchedule }) {
 
           {/* Results Output Column (7 cols) */}
           <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-5 items-stretch">
-            
+
             {/* Metric 1: Total Gross Savings */}
             <div className="p-6 rounded-3xl bg-gradient-to-b from-slate-900/90 to-slate-950 border border-emerald-500/30 shadow-xl flex flex-col justify-between relative overflow-hidden group">
               <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
