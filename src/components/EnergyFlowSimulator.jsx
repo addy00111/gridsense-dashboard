@@ -353,7 +353,7 @@ export default function EnergyFlowSimulator() {
                       <Building2 className="w-6 h-6 text-purple-400" />
                     </div>
                   </div>
-                  <h4 className="text-base font-bold text-white mb-1">Hostel Block A Pilot (Single Building)</h4>
+                  <h4 className="text-base font-bold text-white mb-1">Hostel Block A (Calibrated from Campus Meter Logs)</h4>
                   <div className="text-3xl font-black text-purple-400 font-mono">
                     {activeHostelKw} <span className="text-sm font-normal text-slate-400">kW</span>
                   </div>
